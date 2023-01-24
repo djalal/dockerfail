@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+
+  db:
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=md5
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+    secrets:
+      - db-password
+
+  words:
+    secrets:
+      - db-password
+
+secrets:
+  db-password:
+    external: true
+    name: "${SECRET_NAME:-replace_me}"

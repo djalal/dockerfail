@@ -1,0 +1,4 @@
+.dockerignore
+Dockerfile
+.git
+build-ship-run.sh

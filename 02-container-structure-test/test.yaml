@@ -1,0 +1,49 @@
+schemaVersion: '2.0.0'
+metadataTest:
+  cmd: ["/usr/bin/supervisord"]
+
+fileExistenceTests:
+- name: 'java'
+  path: '/usr/bin/java'
+  shouldExist: true
+  permissions: 'Lrwxrwxrwx'
+  uid: 0
+  gid: 0
+  isExecutableBy: 'any'
+- name: 'static'
+  path: '/static'
+  shouldExist: true
+  permissions: 'drwxr-xr-x'
+  uid: 0
+  gid: 0
+  isExecutableBy: 'any'
+- name: 'dispatcher'
+  path: '/dispatcher'
+  shouldExist: true
+  permissions: '-rwxr-xr-x'
+  uid: 0
+  gid: 0
+  isExecutableBy: 'any'
+- name: 'words.jar'
+  path: '/app/words.jar'
+  shouldExist: true
+  permissions: '-rw-r--r--'
+  uid: 0
+  gid: 0
+- name: 'postgres'
+  path: '/usr/lib/postgresql/11/bin/postgres'
+  shouldExist: true
+  permissions: '-rwxr-xr-x'
+  uid: 0
+  gid: 0
+  isExecutableBy: 'any'
+
+commandTests:
+  - name: "java version"
+    command: "/usr/bin/java"
+    args: [ "--version"]
+    expectedOutput: ['openjdk 11\.0\.16.*']
+  - name: "postgres version"
+    command: "/usr/lib/postgresql/11/bin/postgres"
+    args: [ "--version"]
+    expectedOutput: ['.*11\..*']
