@@ -27,7 +27,7 @@ Code is divided in 11 folders, each bringing an improvement on the previous one.
 - shell
 - docker 20+
 - a docker hub account to push images (free)
-- [ggshield](https://docs.gitguardian.com/ggshield-docs/reference/install) (client with valid API key)
+- [ggshield](https://docs.gitguardian.com/ggshield-docs/getting-started) (client with valid API key)
 
 ### Configuration
 
@@ -36,7 +36,7 @@ rename/copy `.env-dist` to `.env`
 open `.env` to complete configuration
 ```
 export GITGUARDIAN_API_KEY=<xyz>
-export REGISTRY=dockerfail
+export REPO=dockerfail/repo
 ```
 
 > Apple M1 Chip: you need to force platform type like this:

@@ -4,13 +4,13 @@ services:
 
   db:
     build: db
-    image: ${IMAGE_URI}-db:${TAG}
+    image: ${IMAGE_URI}:db-${TAG}
     networks:
       - wordsmith
 
   words:
     build: words
-    image: ${IMAGE_URI}-words:${TAG}
+    image: ${IMAGE_URI}:words-${TAG}
     deploy:
       replicas: 3
     networks:
@@ -18,7 +18,7 @@ services:
 
   web:
     build: web
-    image: ${IMAGE_URI}-web:${TAG}
+    image: ${IMAGE_URI}:web-${TAG}
     ports:
      - "8080:80"
     networks:

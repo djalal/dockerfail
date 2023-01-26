@@ -1,10 +1,10 @@
 set -e
 
 TIMESTAMP=`date +%s`
-REPO=$(basename $PWD)
-REGISTRY=dockerfail
-IMAGE_URI=$REGISTRY/$REPO:$TIMESTAMP
-SECRET_NAME=$REPO-db.$TIMESTAMP
+TAG=$(basename $PWD)
+# Set up the REPO as var in your shell
+IMAGE_URI=$REPO:$TAG
+SECRET_NAME=$TAG-db.$TIMESTAMP
 
 #01/03 BUILD
 docker run --rm -i hadolint/hadolint < Dockerfile
@@ -18,7 +18,7 @@ docker push $IMAGE_URI
 
 #03/03 RUN
 docker swarm init || true
-docker service rm $REPO || true
+docker service rm $TAG || true
 
 openssl rand -base64 32 | docker secret create $SECRET_NAME -
-docker service create --secret=$SECRET_NAME --name $REPO --publish published=8070,target=80 --no-resolve-image --with-registry-auth  --host=words:127.0.0.1 --host=db:127.0.0.1 --env POSTGRES_PASSWORD_FILE=/run/secrets/$SECRET_NAME $IMAGE_URI
+docker service create --secret=$SECRET_NAME --name $TAG --publish published=8070,target=80 --no-resolve-image --with-registry-auth  --host=words:127.0.0.1 --host=db:127.0.0.1 --env POSTGRES_PASSWORD_FILE=/run/secrets/$SECRET_NAME $IMAGE_URI
