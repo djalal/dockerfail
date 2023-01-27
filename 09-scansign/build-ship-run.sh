@@ -26,7 +26,8 @@ for SERVICE in web words db; do
     echo inspecting $IMAGE_URI-$SERVICE:$TIMESTAMP
     docker run --platform=linux/amd64 --rm -v /var/run/docker.sock:/var/run/docker.sock -v $PWD:/src gcr.io/gcp-runtimes/container-structure-test test --image $IMAGE_URI-$SERVICE:$TIMESTAMP --config /src/test.yaml
     ggshield secret scan docker $IMAGE_URI-$SERVICE:$TIMESTAMP
-    docker sbom $IMAGE_URI-$SERVICE:$TIMESTAMP > $OLDPWD/sbom-$SERVICE.txt
+    mkdir -p $OLDPWD/../data/$REPO
+    docker sbom $IMAGE_URI-$SERVICE:$TIMESTAMP > $OLDPWD/../data/$REPO/sbom-$SERVICE.txt
     cd $OLDPWD
 done
 
