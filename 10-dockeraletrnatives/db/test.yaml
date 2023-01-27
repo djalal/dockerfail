@@ -1,0 +1,18 @@
+schemaVersion: '2.0.0'
+metadataTest:
+  cmd: ["postgres"]
+
+fileExistenceTests:
+- name: 'postgres'
+  path: '/usr/local/bin/postgres'
+  shouldExist: true
+  permissions: '-rwxr-xr-x'
+  uid: 0
+  gid: 0
+  isExecutableBy: 'any'
+
+commandTests:
+  - name: "postgres version"
+    command: "/usr/local/bin/postgres"
+    args: [ "--version"]
+    expectedOutput: ['.*10\..*']

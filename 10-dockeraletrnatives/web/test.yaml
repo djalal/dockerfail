@@ -1,0 +1,19 @@
+schemaVersion: '2.0.0'
+metadataTest:
+  cmd: ["/dispatcher"]
+
+fileExistenceTests:
+- name: 'static'
+  path: '/static'
+  shouldExist: true
+  permissions: 'drwxr-xr-x'
+  uid: 0
+  gid: 0
+  isExecutableBy: 'any'
+- name: 'dispatcher'
+  path: '/dispatcher'
+  shouldExist: true
+  permissions: '-rwxr-xr-x'
+  uid: 0
+  gid: 0
+  isExecutableBy: 'any'
