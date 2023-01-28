@@ -28,6 +28,7 @@ Code is divided in 11 folders, each bringing an improvement on the previous one.
 - docker 20+
 - a docker hub account to push images (free)
 - [ggshield](https://docs.gitguardian.com/ggshield-docs/reference/install) (client with valid API key)
+- [snyk](https://snyk.io/) (connected via docker scan --login)
 
 ### Configuration
 

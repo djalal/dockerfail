@@ -2,6 +2,7 @@ set -e
 
 # init env vars with secrets
 source ../.env
+mkdir -p $HOME/.trivy-cache
 
 TIMESTAMP=`date +%s`
 REPO=$(basename $PWD)
@@ -28,6 +29,7 @@ for SERVICE in web words db; do
     ggshield secret scan docker $IMAGE_URI-$SERVICE:$TIMESTAMP
     mkdir -p $OLDPWD/../data/$REPO
     docker sbom $IMAGE_URI-$SERVICE:$TIMESTAMP > $OLDPWD/../data/$REPO/sbom-$SERVICE.txt
+    docker scan --exclude-base --file ./Dockerfile --severity=high $IMAGE_URI-$SERVICE:$TIMESTAMP
     cd $OLDPWD
 done
 

@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+
+  db:
+    build: db
+    image: ${IMAGE_URI}-db
+    networks:
+      - wordsmith
+
+  words:
+    image: ${IMAGE_URI}-words
+    deploy:
+      replicas: 3
+    networks:
+      - wordsmith
+
+  web:
+    build: web
+    image: ${IMAGE_URI}-web
+    ports:
+     - "8080:80"
+    networks:
+      - wordsmith
+
+networks:
+  wordsmith:
+    driver: overlay
+    attachable: true
