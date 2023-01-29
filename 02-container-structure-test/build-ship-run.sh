@@ -5,7 +5,7 @@ REGISTRY=dockerfail
 IMAGE_URI=dockerfail/$REPO:prod
 
 #01/03 BUILD
-docker run --rm -i hadolint/hadolint < Dockerfile
+docker run --rm -i hadolint/hadolint < Dockerfile.previous
 time docker build --progress=plain -t $IMAGE_URI .
 docker run --platform=linux/amd64 --rm \
     -v /var/run/docker.sock:/var/run/docker.sock \
