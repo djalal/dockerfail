@@ -3,4 +3,3 @@ Dockerfile
 .git
 build-ship-run.sh
 test.yaml
-sbom*

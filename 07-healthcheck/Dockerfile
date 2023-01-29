@@ -4,7 +4,7 @@ ARG GO_VERSION=1.18.10
 ARG PLATFORM=linux-arm64
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
-    openssh-server=1:8.4p1-5+deb11u1 wget=1.21-1+deb11u1 supervisor=4.2.2-2 maven=3.6.3-5 openjdk-11-jdk=11.0.16+8-1~deb11u1 && \
+    wget=1.21-1+deb11u1 supervisor=4.2.2-2 maven=3.6.3-5 openjdk-11-jdk=11.0.18+10-1~deb11u1 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*  && \
     mkdir -p /var/run/sshd /var/log/supervisor && \
     wget -q -P /tmp "https://dl.google.com/go/go${GO_VERSION}.${PLATFORM}.tar.gz" && \
@@ -32,7 +32,8 @@ COPY /web/static /static/
 FROM postgres:11-bullseye
 
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y curl=7.74.0-1.3+deb11u3 supervisor=4.2.2-2 default-jre=2:1.11-72 && \
+    apt-get install --no-install-recommends -y \
+    curl=7.74.0-1.3+deb11u5 supervisor=4.2.2-2 default-jre=2:1.11-72 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*  && \
     mkdir -p /var/log/supervisor
 
@@ -44,8 +45,8 @@ COPY db/words.sql /docker-entrypoint-initdb.d/
 # Supervisord configuration
 COPY supervisord.conf /etc/supervisor/supervisord.conf
 
-HEALTHCHECK --interval=60s --timeout=10s --start-period=10s  \
-    CMD (curl --fail http://localhost:8080/noun/ && curl --fail http://localhost/index.html) || exit 1
+#HEALTHCHECK --interval=60s --timeout=10s --start-period=30s  \
+#    CMD (curl --fail http://localhost:8080/noun/ && curl --fail http://localhost/) || exit 1
  
 EXPOSE 80 8080
 CMD ["/usr/bin/supervisord"]

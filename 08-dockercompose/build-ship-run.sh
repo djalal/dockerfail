@@ -21,7 +21,10 @@ time env IMAGE_URI=$IMAGE_URI TAG=$TIMESTAMP docker compose build
 for SERVICE in web words db; do
     cd $SERVICE
     echo inspecting $IMAGE_URI-$SERVICE:$TIMESTAMP
-    docker run --platform=linux/amd64 --rm -v /var/run/docker.sock:/var/run/docker.sock -v $PWD:/src gcr.io/gcp-runtimes/container-structure-test test --image $IMAGE_URI-$SERVICE:$TIMESTAMP --config /src/test.yaml
+    docker run --platform=linux/amd64 --rm \
+        -v /var/run/docker.sock:/var/run/docker.sock \
+        -v $PWD:/src gcr.io/gcp-runtimes/container-structure-test \
+        test --image $IMAGE_URI-$SERVICE:$TIMESTAMP --config /src/test.yaml
     ggshield secret scan docker $IMAGE_URI-$SERVICE:$TIMESTAMP
     mkdir -p $OLDPWD/../data/$REPO
     docker sbom $IMAGE_URI-$SERVICE:$TIMESTAMP > $OLDPWD/../data/$REPO/sbom-$SERVICE.txt
@@ -37,5 +40,7 @@ docker stack rm $REPO || true
 
 openssl rand -base64 32 | md5 | docker secret create $SECRET_NAME -
 
-echo IMAGE_URI=$IMAGE_URI TAG=$TIMESTAMP SECRET_NAME=$SECRET_NAME REPO=$REPO
-IMAGE_URI=$IMAGE_URI TAG=$TIMESTAMP SECRET_NAME=$SECRET_NAME docker stack deploy --with-registry-auth --compose-file docker-compose.yaml --compose-file docker-compose.prod.yaml $REPO
+IMAGE_URI=$IMAGE_URI TAG=$TIMESTAMP SECRET_NAME=$SECRET_NAME \
+docker stack deploy \
+    --with-registry-auth --compose-file docker-compose.yaml \
+    --compose-file docker-compose.prod.yaml $REPO
