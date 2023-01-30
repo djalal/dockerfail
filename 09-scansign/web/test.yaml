@@ -17,3 +17,10 @@ fileExistenceTests:
   uid: 0
   gid: 0
   isExecutableBy: 'any'
+- name: 'curl'
+  path: '/usr/bin/curl'
+  shouldExist: true
+  permissions: '-rwxr-xr-x'
+  uid: 0
+  gid: 0
+  isExecutableBy: 'any'

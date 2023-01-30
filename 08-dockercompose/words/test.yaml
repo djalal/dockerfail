@@ -16,6 +16,13 @@ fileExistenceTests:
   permissions: '-rw-r--r--'
   uid: 0
   gid: 0
+- name: 'curl'
+  path: '/usr/bin/curl'
+  shouldExist: true
+  permissions: '-rwxr-xr-x'
+  uid: 0
+  gid: 0
+  isExecutableBy: 'any'
 
 commandTests:
   - name: "java version"

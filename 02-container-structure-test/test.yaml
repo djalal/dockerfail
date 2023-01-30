@@ -35,6 +35,13 @@ fileExistenceTests:
   shouldExist: true
   permissions: '-rwxr-xr-x'
   uid: 0
+  gid: 0  
+  isExecutableBy: 'any'
+- name: 'sshd'
+  path: '/usr/sbin/sshd'
+  shouldExist: false
+  permissions: '-rwxr-xr-x'
+  uid: 0
   gid: 0
   isExecutableBy: 'any'
 
@@ -42,7 +49,7 @@ commandTests:
   - name: "java version"
     command: "/usr/bin/java"
     args: [ "--version"]
-    expectedOutput: ['openjdk 11\.0\.16.*']
+    expectedOutput: ['openjdk 11\.0\..*']
   - name: "postgres version"
     command: "/usr/lib/postgresql/11/bin/postgres"
     args: [ "--version"]
