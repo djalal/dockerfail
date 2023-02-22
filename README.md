@@ -13,8 +13,8 @@ Code is divided in 11 folders, each bringing an improvement on the previous one.
 00. minimal viable container running wordsmith demo
 01. syntaxic check of Dockerfile with hadolint
 02. semantic checks of resulting Docker image with container-structure-test
-03. security and image size fixes with multi stage Dockerfile
-04. speed and network gains with cache good practices
+03. speed and network gains with cache good practices
+04. security and image size fixes with multi stage Dockerfile
 05. storing secrets away from code
 06. auditable track of dependencies
 07. increasing resiliency with healthchecks
