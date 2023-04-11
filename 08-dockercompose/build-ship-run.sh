@@ -2,7 +2,7 @@ set -e
 
 TIMESTAMP=`date +%s`
 REPO=$(basename $PWD)
-REGISTRY=dockerfail
+REGISTRY=maboullaite857
 IMAGE_URI=$REGISTRY/$REPO
 SECRET_NAME=$REPO-db.$TIMESTAMP
 OLDPWD=$PWD
@@ -21,7 +21,7 @@ time env IMAGE_URI=$IMAGE_URI TAG=$TIMESTAMP docker compose build
 for SERVICE in web words db; do
     cd $SERVICE
     echo inspecting $IMAGE_URI-$SERVICE:$TIMESTAMP
-    docker run --platform=linux/amd64 --rm \
+    docker run --rm \
         -v /var/run/docker.sock:/var/run/docker.sock \
         -v $PWD:/src gcr.io/gcp-runtimes/container-structure-test \
         test --image $IMAGE_URI-$SERVICE:$TIMESTAMP --config /src/test.yaml

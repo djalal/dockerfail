@@ -1,8 +1,8 @@
 set -e
 
 REPO=$(basename $PWD)
-REGISTRY=dockerfail
-IMAGE_URI=dockerfail/$REPO:prod
+REGISTRY=maboullaite857
+IMAGE_URI=maboullaite857/$REPO:prod
 
 #01/03 BUILD
 time docker build --progress=plain -t $IMAGE_URI .

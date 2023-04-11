@@ -1,7 +1,7 @@
 FROM postgres:11-bullseye AS build
 
 ARG GO_VERSION=1.18.10
-ARG PLATFORM=linux-arm64
+ARG PLATFORM=linux-amd64
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
     openssh-server=1:8.4p1-5+deb11u1 wget=1.21-1+deb11u1 supervisor=4.2.2-2 maven=3.6.3-5 openjdk-11-jdk=11.0.18+10-1~deb11u1 && \

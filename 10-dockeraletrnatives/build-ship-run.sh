@@ -8,7 +8,7 @@ SECRET_NAME=$REPO-db.$TIMESTAMP
 OLDPWD=$PWD
 
 #01/03 BUILD
-for SERVICE in web words db; do
+for SERVICE in web db; do
     cd $SERVICE
     docker run --rm -i hadolint/hadolint < Dockerfile
     cd $OLDPWD
@@ -22,14 +22,14 @@ time env IMAGE_URI=$IMAGE_URI TAG=$TIMESTAMP docker compose build
 for SERVICE in web words db; do
     cd $SERVICE
     echo inspecting $IMAGE_URI-$SERVICE
-    docker run --platform=linux/amd64 --rm -v /var/run/docker.sock:/var/run/docker.sock -v $PWD:/src gcr.io/gcp-runtimes/container-structure-test test --image $IMAGE_URI-$SERVICE --config /src/test.yaml
+    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $PWD:/src gcr.io/gcp-runtimes/container-structure-test test --image $IMAGE_URI-$SERVICE --config /src/test.yaml
     ggshield secret scan docker $IMAGE_URI-$SERVICE
-    docker sbom $IMAGE_URI-$SERVICE > $OLDPWD/sbom-$SERVICE.txt
+    docker sbom $IMAGE_URI-$SERVICE > $OLDPWD/../data/sbom-$SERVICE.txt
     cd $OLDPWD
 done
 
 #02/03 SHIP
-mvn compile jib:build
+mvn -f words compile jib:build
 time IMAGE_URI=$IMAGE_URI TAG=$TIMESTAMP docker compose push
 
 #03/03 RUN

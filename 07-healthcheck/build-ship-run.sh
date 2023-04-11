@@ -2,14 +2,14 @@ set -e
 
 TIMESTAMP=`date +%s`
 REPO=$(basename $PWD)
-REGISTRY=dockerfail
+REGISTRY=maboullaite857
 IMAGE_URI=$REGISTRY/$REPO:$TIMESTAMP
 SECRET_NAME=$REPO-db.$TIMESTAMP
 
 #01/03 BUILD
 docker run --rm -i hadolint/hadolint < Dockerfile
 time docker build --progress=plain -t $IMAGE_URI .
-docker run --platform=linux/amd64 --rm \
+docker run --rm \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v $PWD:/src gcr.io/gcp-runtimes/container-structure-test \
     test --image $IMAGE_URI --config /src/test.yaml

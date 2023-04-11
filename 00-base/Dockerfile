@@ -1,7 +1,7 @@
 FROM postgres:11-bullseye
 
 ARG GO_VERSION=1.18.10
-ARG PLATFORM=linux-arm64
+ARG PLATFORM=linux-amd64
 RUN apt-get update && apt-get install -y openssh-server supervisor wget
 RUN mkdir -p /var/run/sshd /var/log/supervisor
 
