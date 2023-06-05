@@ -11,6 +11,7 @@ time docker build --progress=plain -t $IMAGE_URI .
 docker push $IMAGE_URI 
 
 #03/03 RUN
+docker rm -f $REPO || true
 docker run --name $REPO -P -d --add-host=words:127.0.0.1 \
     --add-host=db:127.0.0.1 --workdir=/ \
     -e POSTGRES_PASSWORD=s3cr3t $IMAGE_URI
