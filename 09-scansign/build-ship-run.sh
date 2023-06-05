@@ -32,8 +32,10 @@ for SERVICE in web words db; do
     ggshield secret scan docker $IMAGE_URI-$SERVICE:$TIMESTAMP
     mkdir -p $OLDPWD/../data/$REPO
     docker sbom $IMAGE_URI-$SERVICE:$TIMESTAMP > $OLDPWD/../data/$REPO/sbom-$SERVICE.txt
-    docker scan --exclude-base --severity=high \
-         --file ./Dockerfile $IMAGE_URI-$SERVICE:$TIMESTAMP
+    docker scout cves \
+        --ignore-base --only-fixed \
+        --only-severity=high,critical \
+        $IMAGE_URI-$SERVICE:$TIMESTAMP
     cd $OLDPWD
 done
 
@@ -42,6 +44,7 @@ export DOCKER_CONTENT_TRUST=1
 
 # docker compose does not support DCT pushes yet
 for SERVICE in web words db; do
+    docker trust sign --local $IMAGE_URI-$SERVICE:$TIMESTAMP
     docker push $IMAGE_URI-$SERVICE:$TIMESTAMP
 done
 

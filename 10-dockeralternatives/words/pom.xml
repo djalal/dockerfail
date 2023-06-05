@@ -87,7 +87,7 @@
                     <version>3.3.1</version>
                     <configuration>
                         <to>
-                            <image>docker.io/maboullaite857/10-dockeraletrnatives-words</image>
+                            <image>docker.io/dockerfail/10-dockeralternatives-words</image>
                         </to>
                     </configuration>
                       <executions>

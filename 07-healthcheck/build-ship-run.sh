@@ -1,5 +1,7 @@
 set -e
 
+source ../.env
+
 TIMESTAMP=`date +%s`
 REPO=$(basename $PWD)
 REGISTRY=dockerfail
@@ -14,6 +16,7 @@ docker run --platform=linux/amd64 --rm \
     -v $PWD:/src gcr.io/gcp-runtimes/container-structure-test \
     test --image $IMAGE_URI --config /src/test.yaml
 ggshield secret scan docker $IMAGE_URI
+
 mkdir -p ../data/$REPO
 docker sbom $IMAGE_URI > ../data/$REPO/sbom.txt
 

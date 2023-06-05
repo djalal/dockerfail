@@ -8,7 +8,7 @@ RUN go build dispatcher.go
 # RUN
 FROM alpine:3
 
-RUN apk add --no-cache --update curl=7.87.0-r1
+RUN apk add --no-cache --update curl=8.1.1-r1
 
 EXPOSE 80
 CMD ["/dispatcher"]

@@ -1,5 +1,7 @@
 set -e
 
+source ../.env
+
 TIMESTAMP=`date +%s`
 REPO=$(basename $PWD)
 REGISTRY=dockerfail

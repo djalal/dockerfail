@@ -1,5 +1,7 @@
 set -e
 
+source ../.env
+
 REPO=$(basename $PWD)
 REGISTRY=dockerfail
 IMAGE_URI=dockerfail/$REPO:`date +%s`

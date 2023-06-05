@@ -24,7 +24,27 @@ WORKDIR /home/lab
 RUN mvn verify -DskipTests --fail-never && \
     cp -rp /home/lab/target/ /app
 
-FROM postgres:11-bullseye
+FROM postgres:11-bullseye as dev
+
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
+    curl=7.58.0 \
+    supervisor=4.2.2-2 default-jre=2:1.11-72 && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*  && \
+    mkdir -p /var/log/supervisor
+
+COPY --from=build /app /app
+COPY --from=build /dispatcher /dispatcher
+COPY /web/static /static
+COPY db/words.sql /docker-entrypoint-initdb.d/
+
+# Supervisord configuration
+COPY supervisord.conf /etc/supervisor/supervisord.conf
+EXPOSE 80 8080
+CMD ["/usr/bin/supervisord"]
+
+
+FROM postgres:11-bullseye as prod
 
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
